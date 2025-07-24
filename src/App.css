@@ -1,3 +1,16 @@
 .app{
     border-bottom: 1px solid rgb(228, 224, 224);
 }
+input{
+    color: silver;
+    font-size: 15px;
+}
+input::placeholder{
+    color: rgb(74, 74, 74);
+}
+.signUp{
+    
+}
+.signUp:hover{
+    background-color: rgb(183, 54, 54);
+}

@@ -73,3 +73,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 #
 - Installed create react app with name netflix-gpt
 - Configured Tailwind css with our netflix-gpt
+- Build sign in and sign up form and also Login and Header pages
