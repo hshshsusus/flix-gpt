@@ -1,9 +1,11 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { isValidEmailPass } from "../utils/Validation";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import {useNavigate} from "react-router-dom"
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/UserSlice";
+import { BG_IMG } from "../utils/Constants";
 
 const Login = () => {
 
@@ -11,8 +13,10 @@ const Login = () => {
     const [errmsg, setErrmsg] = useState(null);
     const [User, setUser] = useState();
 
-    console.log("user", User)
-    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    
+    
     // console.log("navi", navigate)
 
     // console.log("auth",auth)
@@ -44,12 +48,23 @@ const Login = () => {
                     // Signed up 
                     const user = userCredential.user;
                     setUser(user)
-                    navigate("/browse")
+
+                    updateProfile(user, {
+                        displayName: nameVal, photoURL: "https://i.pinimg.com/originals/30/db/47/30db479e1558c3ed46b4ed23b3cd98ae.png"
+                    }).then(() => {
+                        const {email, photoURL, displayName} = auth.currentUser;
+                        dispatch(addUser({email:email, photoURL: photoURL, displayName: displayName}))
+                        
+                    }).catch((error) => {
+                        // An error occurred
+                        setErrmsg(error.message)
+                    });
+                    
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                   setErrmsg(errorCode+"-"+errorMessage)
+                    
                 });
         }
         else {
@@ -58,14 +73,23 @@ const Login = () => {
                 .then((userCredential) => {
                     // Signed in 
                     const user = userCredential.user;
-                    // console.log("signIn", user);
+                    updateProfile(user, {
+                        displayName: nameVal, photoURL: "https://i.pinimg.com/originals/30/db/47/30db479e1558c3ed46b4ed23b3cd98ae.png"
+                    }).then(() => {
+                        const {email, photoURL, displayName} = auth.currentUser;
+                        dispatch(addUser({email:email, photoURL: photoURL, displayName: displayName}))
+                        
+                    }).catch((error) => {
+                        // An error occurred
+                        setErrmsg(error.message)
+                    });
+
                     setUser(user)
-                    navigate("/browse")
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    setErrmsg(errorCode+"-"+errorMessage)
+                    setErrmsg(errorCode + "-" + errorMessage)
                 });
         }
         setErrmsg(errMsg)
@@ -76,13 +100,13 @@ const Login = () => {
     return (
         <div className="w-full relative">
             <div className="w-[100%] h-[100%] ">
-                <img className="w-[100%] h-[100vh] object-cover" src="https://assets.nflxext.com/ffe/siteui/vlv3/9a924b36-8e85-4f2a-baac-ce2872ee8163/web/IN-en-20250714-TRIFECTA-perspective_dfbf09de-9182-41e1-a9c6-cd7b1a6d84d6_small.jpg" alt="img" />
+                <img className="w-[100%] h-[100vh] object-cover" src={BG_IMG} alt="img" />
 
                 <div className="w-[100%]">
-                    <Header data={User}/>
+                    <Header data={User} />
                 </div>
                 <div className="w-[100%] h-[100%] flex justify-center">
-                    <form className="w-[410px] h-auto absolute top-[150px] flex flex-col bg-[rgba(0,0,0,0.7)] p-[45px] rounded-[3px]" onSubmit={(e) => e.preventDefault()}>
+                    <form className="w-[410px] h-auto absolute top-[150px] flex flex-col bg-[rgba(0,0,0,0.9)] p-[40px] rounded-[3px] z-10" onSubmit={(e) => e.preventDefault()}>
                         <p className="text-[30px] font-bold text-white">{isSignInForm ? "Sign In" : "Sign Up"}</p>
                         {!isSignInForm && <input ref={fullName} type="text" placeholder="Full name" className="mt-[20px] py-[12px] px-[10px] w-[320px] bg-[rgba(24,23,23,0.8)] rounded-[3px]" />}
                         <input ref={email} type="text" placeholder="Email or mobile number" className="email mt-[20px] py-[12px] px-[10px] w-[320px] bg-[rgba(24,23,23,0.8)] rounded-[3px]" />

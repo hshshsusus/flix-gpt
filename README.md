@@ -74,3 +74,12 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 - Installed create react app with name netflix-gpt
 - Configured Tailwind css with our netflix-gpt
 - Build sign in and sign up form and also Login and Header pages
+- made signIn and signUp forms
+- Configured firebase with our app for act as an backend 
+- And also for authentication 
+- Also deployed our app by hoisting in firebase
+- used useRef hook for take reference of inputfields. It will used alternative to the create state varible
+- created Redux store as global store for managaing the data
+- Bug : During developing our app I have seen a bug which is when if I eneter /browse it will redirect to the    browse page and also vise-versa with doing authentication. When I found it as soon as I have fiexd it
+- Bug : Updated profile photo of logged user and their name
+- 
