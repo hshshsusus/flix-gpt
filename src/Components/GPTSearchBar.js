@@ -31,7 +31,7 @@ const GPTSearchBar = () => {
         const gptQuery = `Act as a Movie Recommendation system and suggest some movies for the query: ${loading}. only give me names of 5 movies, comma seperated. Like the example result given ahead. Example Result: Mirchi, Hanuman, Kanthara, Gabbersingh, Chhava`;
 
         const completion = await openai.chat.completions.create({
-            model: 'google/gemini-2.0-flash-exp:free',
+            model: 'tngtech/deepseek-r1t2-chimera:free',
             messages: [
                 {
                     role: 'user',

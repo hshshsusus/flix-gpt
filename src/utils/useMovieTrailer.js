@@ -12,7 +12,8 @@ const useMovieTrailer = () => {
         const data = await fetch("https://api.themoviedb.org/3/movie/1087192/videos",API_Options);
         const json = await data?.json();
         const filteredData = json?.results?.filter((video) => video?.type === "Trailer");
-        const mainVideo = filteredData[0] ? filteredData[0] : json?.results[0];
+        if(!filteredData) return;
+        const mainVideo = filteredData[0] ? filteredData?.[0] : json?.results?.[0];
         // console.log("main", mainVideo)
         dispatch(addMovieTrailer(mainVideo));
     }

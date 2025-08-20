@@ -1,7 +1,7 @@
 import OpenAI from 'openai';
 import { API_KEY } from './Constants';
 
-console.log("apikey",API_KEY)
+// console.log("apikey",API_KEY)
 
 const openai = new OpenAI({
   baseURL: 'https://openrouter.ai/api/v1',
